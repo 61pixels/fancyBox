@@ -1,3 +1,39 @@
+fancyBox with touch support
+===========================
+
+Implanting touch into fancyBox, as I was developing this I realized that I need more test to be done and on many devices as possible.
+
+Test have been done on
+----------------------
+
+Android GB and ICS browser
+
+On Chrome beta for ICS
+
+Have not tested on iphone 
+
+
+How to use
+----------
+just copy and paste
+
+minMoveX and minMoveY use this to tell how long the touch should move to activat the function to go next.
+
+The defaults are:
+minMoveX: 17,
+minMoveY: 17,
+preventE: true, // for now just leave it as true
+
+I am still working on this development, think of it as beta for now
+
+Any Bugs
+--------
+
+If there is any issues with touch, create an issue here 
+
+Other issue that concerning fancyBox please create an issue at >>> https://github.com/fancyapps/fancyBox/issues
+
+
 fancyBox
 ========
 
