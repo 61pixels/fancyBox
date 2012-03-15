@@ -20,9 +20,11 @@ just copy and paste
 minMoveX and minMoveY use this to tell how long the touch should move to activat the function to go next.
 
 The defaults are:
+
     minMoveX: 17,
     minMoveY: 17,
     preventE: true, // for now just leave it as true
+
 
 I am still working on this development, think of it as beta for now
 
