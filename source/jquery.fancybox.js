@@ -1,5 +1,5 @@
  /*!
- * fancyBox - jQuery Plugin
+ * fancyBox - jQuery Plugin (with touch v0.0.3)
  * version: 2.0.5 (02/03/2012)
  * @requires jQuery v1.6 or later
  *
@@ -20,6 +20,9 @@
 		},
 		didResize = false,
 		resizeTimer = null,
+		startY = null,
+		startX = null,
+		isMoving = false,
 		isMobile = document.createTouch !== undefined,
 		isString = function(str) {
 			return $.type(str) === "string";
@@ -30,7 +33,7 @@
 		version: '2.0.5',
 
 		defaults: {
-			padding: 15,
+			padding: 5,
 			margin: 20,
 
 			width: 800,
@@ -39,6 +42,11 @@
 			minHeight: 100,
 			maxWidth: 9999,
 			maxHeight: 9999,
+
+			//Touch Movement 
+			minMoveX: 17,
+			minMoveY: 17,
+			preventE: true,
 
 			autoSize: true,
 			autoResize: !isMobile,
@@ -191,6 +199,11 @@
 			F.group = group;
 
 			F._start(F.opts.index || 0);
+
+			if ('ontouchstart' in document.documentElement) {
+				addEventListener('touchstart', F.startTouch, false);
+			}
+
 		},
 
 		cancel: function () {
@@ -237,6 +250,11 @@
 				F.inner.css('overflow', 'hidden');
 
 				F.transitions[F.current.closeMethod]();
+			}
+
+			if ('touchstart', F.onTouchStart) {
+				removeEventListener('touchstart', F.startTouch);
+				removeEventListener('touchmove', F.moveTouch);
 			}
 		},
 
@@ -294,6 +312,45 @@
 			if (F.current) {
 				F.jumpto(F.current.index - 1);
 			}
+		},
+
+		startTouch: function(e){
+			if (e.touches.length == 1) {
+				startX = e.touches[0].pageX;
+				startY = e.touches[0].pageY;
+				isMoving = true;
+				this.addEventListener('touchmove', F.moveTouch, false);
+			}
+		},
+
+		moveTouch: function(e) {
+			if (F.preventE) {
+				e.preventDefault();
+			}
+			if (isMoving) {
+				var x = e.touches[0].pageX;
+				var y = e.touches[0].pageY;
+				var moveX = startX - x;
+				var moveY = startY - y;
+
+				var minX = F.current.minMoveX;
+				var minY = F.current.minMoveY;
+
+				if(Math.abs(moveX) >= minX) {
+					F.cancelTouch();
+					if(moveX > 0) {
+						F.prev();
+						}
+					else {
+						F.next();
+					}	 
+				}
+			} //!eM
+		},
+		
+		cancelTouch: function(){
+			startX = null;
+			isMoving = false;			
 		},
 
 		jumpto: function (index) {
