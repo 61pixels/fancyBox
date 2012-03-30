@@ -10,8 +10,9 @@ Android GB and ICS browser
 
 On Chrome beta for ICS
 
-Have not tested on iphone 
+works on iPhone 4
 
+works on iPad2 ios5 (thanks to  michaelbramwell)
 
 How to use
 ----------
