@@ -3,7 +3,7 @@
  * version: 2.0.6 (Thu, 19 Jul 2012)
  * touch version: 0.1.0 (2.7.14)
  * @requires jQuery v1.6 or later
- * 
+ *
  * Examples at http://fancyapps.com/fancybox/
  * License: www.fancyapps.com/fancybox/#license
  *
@@ -424,6 +424,7 @@
 
 				F.transitions[ F.current.closeMethod ]();
 			}
+
 		},
 
 		// Manage slideshow:
@@ -534,6 +535,8 @@
 			}//!eM
 		},
 		cancelTouch: function(){
+				document.body.removeEventListener('touchmove', F.moveTouch, false);
+				document.body.removeEventListener('touchend', F.cancelTouch, false);
 			startX = null;
 			startY = null;
 			isMoving = false;
@@ -1709,9 +1712,8 @@
 				});
 			//touch start
 			if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-				addEventListener('touchstart', F.startTouch, false);
+				document.body.addEventListener('touchstart', F.startTouch, false);
 			}
-
 			if (opts.closeClick) {
 
 				overlay.bind('click.fb', F.close);
